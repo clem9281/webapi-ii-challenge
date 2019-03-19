@@ -19,7 +19,11 @@ const PostForm = props => {
               });
               props.setIsUpdating(false);
             }
-          : e => handleAddPost(e, { title: title, contents: contents })
+          : e => {
+              handleAddPost(e, { title: title, contents: contents });
+              setTitle("");
+              setContents("");
+            }
       }
     >
       <h4>{isUpdating ? "Edit Post" : "Create New Post"}</h4>
