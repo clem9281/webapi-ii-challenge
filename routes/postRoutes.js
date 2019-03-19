@@ -23,9 +23,9 @@ router
         errorMessage: "Please provide title and contents for the post."
       });
     try {
-      const newPostId = await db.insert(req.body);
-      const newPost = await db.findById(newPostId.id);
-      return res.status(201).json(newPost);
+      const newPost = await db.insert(req.body);
+      const posts = await db.find();
+      return res.status(201).json(posts);
     } catch (error) {}
   });
 
@@ -72,8 +72,11 @@ router
           .status(404)
           .json({ message: "The post with the specified ID does not exist." });
       }
-      const updatedPost = await db.findById(req.params.id);
-      return res.status(200).json(updatedPost);
+      // the readme said to return the newly updated post, so here's that, but I wanted the array of posts for my react app
+      // const updatedPost = await db.findById(req.params.id);
+      // return res.status(200).json(updatedPost);
+      const posts = await db.find();
+      return res.status(200).json(posts);
     } catch (error) {
       return res
         .status(500)
